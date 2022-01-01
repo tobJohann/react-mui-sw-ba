@@ -20,8 +20,18 @@ export class ServiceWorker {
     const serviceWorker = await this.getActiveWorker()
     return serviceWorker.pushManager.getSubscription()
   }
-  
-  static listenForPushEvents() {
-    // Todo Listen for Push events
+
+  static async listenForPushEvents() {
+    const serviceWorker = await this.getActiveWorker()
+    serviceWorker.addEventListener('push', event => {
+      console.log('PUSH EVENT')
+      if (event.data) {
+        console.log(event.data.text())
+      }
+      else {
+        console.log('No event data')
+      }
+    })
+
   }
 }

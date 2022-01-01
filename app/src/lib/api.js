@@ -6,8 +6,9 @@ const api = axios.create({
 })
 
 export const apiPushNotification = {
-  get: async () => await api.get('http://localhost:4000/api/push-subscriptions'),
+  get: async () => await api.get('push-subscriptions'),
   subscribe: async subscription => {
     await api.post('push-subscriptions/subscribe', subscription)
   },
+  send: async (title, options) => await api.post('push-subscriptions', {title, options}),
 }

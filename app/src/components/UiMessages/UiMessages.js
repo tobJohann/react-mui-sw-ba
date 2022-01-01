@@ -1,5 +1,5 @@
 import React from 'react'
-import {Alert, AlertTitle, Slide, Container, Stack, Snackbar} from '@mui/material'
+import {Alert, AlertTitle, Slide, Container, Stack} from '@mui/material'
 import {TransitionGroup} from 'react-transition-group'
 import {useSelector, useDispatch} from 'react-redux'
 import {removeUiMessage} from '../../actions/uiMessagesActions'
@@ -18,8 +18,7 @@ export default function UiMessages({anchor = {horizontal: 'center', vertical: 'b
         <Stack>
           {
             uiMessages.map((uiMessage, index) => (
-                <TransitionGroup>
-
+                <TransitionGroup key={index}>
                   <Slide direction={'left'} mountOnEnter unmountOnExit in={true}>
                     {/*TODO autohideduration*/}
                     <Alert

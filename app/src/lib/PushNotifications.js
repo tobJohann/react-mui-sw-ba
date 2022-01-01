@@ -12,7 +12,6 @@ export class PushNotifications {
   }
 
   static async isSubscribed() {
-    // TODO Change to bool
     return await ServiceWorker.getActivePushSubscriptions()
   }
 
@@ -21,9 +20,9 @@ export class PushNotifications {
     const subscription = await serviceWorker.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(
-          'BFaY68rXmbWFtMLstrNsJD93nOLo2-IOiEJhBzDc1E_REcyiT6DEnoW7-HX9fBmPFOL27GF5f73x4rPwBcSlZNU'),
+          'BJK6XmZlC247q4xA27TdR67lZXp70W0xF2g_LS2m0rCerkoCNF8NVkZyUCqNaOTf2R0HXyV_hfw3ZcrDyoV2mYs'),
     })
-    ServiceWorker.listenForPushEvents()
+    await ServiceWorker.listenForPushEvents()
     return await this.saveSubscriptionOnServer(subscription)
   }
 
@@ -47,8 +46,11 @@ export class PushNotifications {
     if (this.isSupported() && this.isSubscribed()) {
       const serviceWorker = await ServiceWorker.getActiveWorker()
       await serviceWorker.showNotification(title, options)
-
     }
+  }
+
+  static async sendNotification(title, options) {
+    return await apiPushNotification.send(title, options)
   }
 
 }
@@ -56,7 +58,6 @@ export class PushNotifications {
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4)
   const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/')
-
   const rawData = window.atob(base64)
   const outputArray = new Uint8Array(rawData.length)
 

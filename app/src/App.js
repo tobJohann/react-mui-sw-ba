@@ -1,6 +1,6 @@
 import React from 'react'
 import Demo from './components/DemoComponent'
-import {Typography, Container, Snackbar, Alert} from '@mui/material'
+import {Typography, Container} from '@mui/material'
 import UiMessages from './components/UiMessages/UiMessages'
 
 export default function App() {

@@ -1,6 +1,8 @@
 import {PushSubscriptionService} from '../services/pushSubscription.service'
+import webPush from 'web-push'
 
 export class PushSubscriptionController {
+
   static async apiGet(req, res, next) {
     try {
       const subscriptions = await PushSubscriptionService.get()
@@ -32,6 +34,19 @@ export class PushSubscriptionController {
     try {
       const newSubscription = await PushSubscriptionService.store(req.body)
       res.status(201).json({subscription: newSubscription})
+    }
+    catch (error) {
+      res.status(500).json({error})
+    }
+  }
+
+  static async apiSendToAll(req, res, next) {
+    try {
+      const subscriptions = await PushSubscriptionService.get()
+      subscriptions.forEach(subscription => {
+        PushSubscriptionService.send(subscription, req.body)
+      })
+      res.status(200).json({message: 'Push Notifications Sent'})
     }
     catch (error) {
       res.status(500).json({error})

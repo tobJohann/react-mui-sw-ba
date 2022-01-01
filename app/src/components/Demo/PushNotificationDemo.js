@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {useState} from 'react'
 import usePushNotifications from '../../hooks/usePushNotifications'
 import {Button, Container, Grid, Typography} from '@mui/material'
+import CreateNotification from './components/CreateNotification'
 
 export default function PushNotificationsDemo() {
   const pushService = usePushNotifications()
@@ -13,7 +14,7 @@ export default function PushNotificationsDemo() {
             <Button disabled={pushService.userConsent === 'granted'} variant={'contained'}>Ask for Permission</Button>
           </Grid>
           <Grid item>
-            <Button disabled={pushService.subscription !== null} variant={'contained'}
+            <Button disabled={pushService.isSubscribed} variant={'contained'}
                     onClick={pushService.handleSubscription}>
               Subscribe Service
             </Button>
@@ -22,6 +23,9 @@ export default function PushNotificationsDemo() {
             <Button variant={'contained'} onClick={pushService.handleLocalTest}>
               Test local notification
             </Button>
+          </Grid>
+          <Grid item>
+            <CreateNotification/>
           </Grid>
         </Grid>
       </Container>
